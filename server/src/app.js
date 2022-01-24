@@ -3,6 +3,7 @@ import "express-async-errors";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
+import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan("tiny"));
 
+app.use("/auth", authRouter);
 app.use("/tweets", tweetsRouter);
 
 app.use((req, res, next) => {
@@ -25,5 +27,5 @@ app.use((error, req, res, next) => {
 
 const PORT = 8080;
 app.listen(PORT, () => {
-  console.log(`✅ Server is running on ${PORT}.`);
+  console.log(`✅ Server is running on ${PORT}`);
 });
