@@ -42,3 +42,11 @@ export async function login(req, res) {
   const token = createJwtToken(user.id);
   res.status(200).json({ token, username });
 }
+
+export async function me(req, res) {
+  const user = await userRepository.findById(req.userId);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json({ token: req.token, username: user.username });
+}
