@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { config } from "../../config.js";
+import { config } from "../config.js";
 import * as userRepository from "../models/user.js";
 
 const AUTH_ERROR = { message: "Authentication Error" };

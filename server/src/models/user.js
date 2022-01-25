@@ -1,5 +1,13 @@
 let users = [
   {
+    id: "2",
+    username: "ellie",
+    password: "$2b$12$UPeLY1YYxvTcaXOYHC3DuuJO3hQVkVXWd.RZiKbO2DhF4pNyaoLCq", // abcd1234
+    name: "Ellie",
+    email: "ellie@gmail.com",
+    url: "https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-1.png",
+  },
+  {
     id: "1",
     username: "bob",
     password: "$2b$12$UPeLY1YYxvTcaXOYHC3DuuJO3hQVkVXWd.RZiKbO2DhF4pNyaoLCq", // abcd1234

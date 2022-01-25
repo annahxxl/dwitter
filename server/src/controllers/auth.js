@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcryt from "bcrypt";
-import { config } from "../../config.js";
+import { config } from "../config.js";
 import * as userRepository from "../models/user.js";
 
 function createJwtToken(id) {
