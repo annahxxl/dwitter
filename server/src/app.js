@@ -3,6 +3,7 @@ import "express-async-errors";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
+import { config } from "../config.js";
 import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
 
@@ -25,7 +26,6 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on ${PORT}`);
+app.listen(config.host.port, () => {
+  console.log(`✅ Server is running on ${config.host.port}`);
 });

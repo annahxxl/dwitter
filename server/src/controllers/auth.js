@@ -1,14 +1,12 @@
 import jwt from "jsonwebtoken";
 import bcryt from "bcrypt";
+import { config } from "../../config.js";
 import * as userRepository from "../models/user.js";
 
-//TODO: Make it secure!
-const jwtSecretKey = "RBlnSTII37a2iOuMPug3D4uppRTWlyS5";
-const jwtExpiresInDays = "2d";
-const bcryptSaltRounds = 12;
-
 function createJwtToken(id) {
-  return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpiresInDays });
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: config.jwt.expiresInSec,
+  });
 }
 
 export async function signup(req, res) {
@@ -17,7 +15,7 @@ export async function signup(req, res) {
   if (found) {
     return res.status(409).json({ message: `${username} already exists` });
   }
-  const hashed = await bcryt.hash(password, bcryptSaltRounds);
+  const hashed = await bcryt.hash(password, config.bcrypt.saltRounds);
   const userId = await userRepository.createUser({
     username,
     password: hashed,
