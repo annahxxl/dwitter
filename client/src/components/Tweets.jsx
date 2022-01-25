@@ -1,13 +1,13 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import Banner from './Banner';
-import NewTweetForm from './NewTweetForm';
-import TweetCard from './TweetCard';
-import { useAuth } from '../context/AuthContext';
+import React, { memo, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import Banner from "./Banner";
+import NewTweetForm from "./NewTweetForm";
+import TweetCard from "./TweetCard";
+import { useAuth } from "../context/AuthContext";
 
 const Tweets = memo(({ tweetService, username, addable }) => {
   const [tweets, setTweets] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const history = useHistory();
   const { user } = useAuth();
 
@@ -16,6 +16,9 @@ const Tweets = memo(({ tweetService, username, addable }) => {
       .getTweets(username)
       .then((tweets) => setTweets([...tweets]))
       .catch(onError);
+
+    const stopSync = tweetService.onSync((tweet) => onCreated(tweet));
+    return () => stopSync();
   }, [tweetService, username, user]);
 
   const onCreated = (tweet) => {
@@ -45,22 +48,18 @@ const Tweets = memo(({ tweetService, username, addable }) => {
   const onError = (error) => {
     setError(error.toString());
     setTimeout(() => {
-      setError('');
+      setError("");
     }, 3000);
   };
 
   return (
     <>
       {addable && (
-        <NewTweetForm
-          tweetService={tweetService}
-          onError={onError}
-          onCreated={onCreated}
-        />
+        <NewTweetForm tweetService={tweetService} onError={onError} />
       )}
       {error && <Banner text={error} isAlert={true} transient={true} />}
-      {tweets.length === 0 && <p className='tweets-empty'>No Tweets Yet</p>}
-      <ul className='tweets'>
+      {tweets.length === 0 && <p className="tweets-empty">No Tweets Yet</p>}
+      <ul className="tweets">
         {tweets.map((tweet) => (
           <TweetCard
             key={tweet.id}

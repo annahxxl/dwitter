@@ -1,7 +1,12 @@
 export default class TweetService {
-  constructor(http, tokenStorage) {
+  constructor(http, tokenStorage, socket) {
     this.http = http;
     this.tokenStorage = tokenStorage;
+    this.socket = socket;
+  }
+
+  onSync(callback) {
+    return this.socket.onSync("tweet", callback);
   }
 
   getHeaders() {
@@ -21,7 +26,7 @@ export default class TweetService {
     return this.http.fetch(`/tweets`, {
       method: "POST",
       headers: this.getHeaders(),
-      body: JSON.stringify({ text, userId: "1" }),
+      body: JSON.stringify({ text }),
     });
   }
 
