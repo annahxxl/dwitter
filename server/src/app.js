@@ -4,6 +4,7 @@ import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
 import { config } from "./config.js";
+import { db } from "./db.js";
 import { initSocket } from "./connections/socket.js";
 import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
@@ -32,3 +33,7 @@ const server = app.listen(config.host.port, () => {
 });
 
 initSocket(server);
+
+db.getConnection().then(() => {
+  console.log("✅ Successful DB connection");
+});
