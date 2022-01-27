@@ -33,7 +33,7 @@ export async function updateTweet(req, res) {
   if (!tweet) {
     return res.sendStatus(404);
   }
-  if (tweet.userId !== req.userId) {
+  if (tweet.user_id !== req.userId) {
     return res.sendStatus(403);
   }
   const updated = await tweetRepository.update(id, text);
@@ -46,7 +46,7 @@ export async function deleteTweet(req, res) {
   if (!tweet) {
     return res.sendStatus(404);
   }
-  if (tweet.userId !== req.userId) {
+  if (tweet.user_id !== req.userId) {
     return res.sendStatus(403);
   }
   await tweetRepository.remove(id);
