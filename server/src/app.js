@@ -4,7 +4,7 @@ import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
 import { config } from "./config.js";
-import { db } from "./db.js";
+import { sequelize } from "./db.js";
 import { initSocket } from "./connections/socket.js";
 import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
@@ -28,12 +28,10 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-const server = app.listen(config.host.port, () => {
-  console.log(`✅ Server is running on ${config.host.port}`);
-});
-
-initSocket(server);
-
-db.getConnection().then(() => {
+sequelize.sync().then(() => {
   console.log("✅ Successful DB connection");
+  const server = app.listen(config.host.port, () => {
+    console.log(`✅ Server is running on ${config.host.port}`);
+  });
+  initSocket(server);
 });
