@@ -10,9 +10,6 @@ function required(key, defaultValue = undefined) {
 }
 
 export const config = {
-  host: {
-    port: parseInt(required("HOST_PORT", 8080)),
-  },
   db: {
     host: required("DB_HOST"),
     user: required("DB_USER"),
@@ -25,5 +22,9 @@ export const config = {
   },
   bcrypt: {
     saltRounds: parseInt(required("BCRYPT_SALT_ROUNDS", 12)),
+  },
+  port: parseInt(required("PORT", 8080)),
+  cors: {
+    allowedOrigin: required("CORS_ALLOW_ORIGIN"),
   },
 };

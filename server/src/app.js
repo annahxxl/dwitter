@@ -10,10 +10,14 @@ import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
 
 const app = express();
+const corsOption = {
+  origin: config.cors.allowedOrigin,
+  optionsSuccessStatus: 200,
+};
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOption));
 app.use(morgan("tiny"));
 
 app.use("/auth", authRouter);
@@ -30,8 +34,8 @@ app.use((error, req, res, next) => {
 
 sequelize.sync().then(() => {
   console.log("✅ Successful DB connection");
-  const server = app.listen(config.host.port, () => {
-    console.log(`✅ Server is running on ${config.host.port}`);
+  const server = app.listen(config.port, () => {
+    console.log(`✅ Server is running on ${config.port} - ${new Date()}`);
   });
   initSocket(server);
 });
