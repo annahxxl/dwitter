@@ -23,7 +23,7 @@ class Socket {
       });
     });
 
-    this.io.on("connection", () => {
+    this.io.on("connection", (socket) => {
       console.log("📢 Socket client connected");
     });
   }
