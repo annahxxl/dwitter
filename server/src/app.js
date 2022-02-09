@@ -9,6 +9,7 @@ import { sequelize } from "./db.js";
 import { initSocket } from "./connections/socket.js";
 import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
+import { csrfCheck } from "./middlewares/csrf.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cors(corsOption));
 app.use(morgan("tiny"));
 app.use(cookieParser());
 
+app.use(csrfCheck);
 app.use("/auth", authRouter);
 app.use("/tweets", tweetsRouter);
 

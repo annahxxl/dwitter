@@ -65,3 +65,12 @@ export async function me(req, res) {
   }
   res.status(200).json({ token: req.token, username: user.username });
 }
+
+async function generateCSRFToken() {
+  return bcryt.hash(config.csrf.plainToken, 1);
+}
+
+export async function csrfToken(req, res) {
+  const csrfToken = await generateCSRFToken();
+  res.status(200).json({ csrfToken });
+}
