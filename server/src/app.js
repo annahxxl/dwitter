@@ -10,6 +10,7 @@ import { initSocket } from "./connections/socket.js";
 import authRouter from "./routers/auth.js";
 import tweetsRouter from "./routers/tweets.js";
 import { csrfCheck } from "./middlewares/csrf.js";
+import { rateLimiter } from "./middlewares/rate-limiter.js";
 
 const app = express();
 
@@ -25,7 +26,9 @@ app.use(cors(corsOption));
 app.use(morgan("tiny"));
 app.use(cookieParser());
 
+app.use(rateLimiter);
 app.use(csrfCheck);
+
 app.use("/auth", authRouter);
 app.use("/tweets", tweetsRouter);
 
